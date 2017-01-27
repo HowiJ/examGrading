@@ -3,7 +3,18 @@
   <head>
     <title>Exam Grading App</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" type="text/css" href="skeleton/css/skeleton.css">-->
+    <style>
+    td {
+      padding: 0;
+    }
+    textarea {
+      margin-bottom: 0;
+    }
+    .ptd {
+      width: 60px;
+    }
+    </style>
     <script src="angular/angular.min.js"></script>
     <script src="angular-route/angular-route.min.js"></script>
     <script>
@@ -41,32 +52,32 @@
             callback(credentials);
           }
           // Exam Scores
-        factory.setScore = (score, callback) => {
-          if (score) {
-            studentScore = score;
-            let ptd = 0; //points to deduct
+          factory.setScore = (score, callback) => {
+            if (score) {
+              studentScore = score;
+              let ptd = 0; //points to deduct
 
-            for (let i in score.points) {
-              ptd+=score.points[i];
+              for (let i in score.points) {
+                ptd+=score.points[i];
+              }
+              studentScore.score = Math.max(7, 10-ptd);
+
+              callback(true);
+            } else {
+              callback(false);
             }
-            studentScore.score = Math.max(7, 10-ptd);
-
-            callback(true);
-          } else {
-            callback(false);
           }
-        }
-        factory.getScore = callback => {
-          callback(studentScore);
-        }
-        factory.sendEmail = callback => {
-          if (studentScore) {
-            $http.post('/email/send', studentScore).then(res => {
-              studentScore = null;
-              callback(res);
-            })
+          factory.getScore = callback => {
+            callback(studentScore);
           }
-        }
+          factory.sendEmail = callback => {
+            if (studentScore) {
+              $http.post('/email/send', studentScore).then(res => {
+                studentScore = null;
+                callback(res);
+              })
+            }
+          }
 
 
           return factory;
@@ -137,6 +148,7 @@
         })
 
         app.controller('emailController', function($scope, $location, grading) {
+          window.scrollTo(0, 0);
           grading.getScore((data) => {
             console.log(`getscore`);
             

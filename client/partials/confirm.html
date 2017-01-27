@@ -3,8 +3,8 @@
 <h4>Student: <span ng-bind="student.name"></span></h4>
 <h4>Email: <span ng-bind="student.email"></span></h4>
 <h4>Score: <span ng-bind="student.score"></span></h4>
-<input type="submit" value="Cancel" ng-click="$location.url('/');">
-<input type="submit" value="Send Email" ng-click="sendEmail()">
+<button><a href="/">Cancel</a></button>
+<button ng-click="sendEmail()"><a href="">Send Email</a></button>
 
 <h2>Template</h2>
 <hr>
