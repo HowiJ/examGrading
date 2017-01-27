@@ -69,7 +69,7 @@
             <tr ng-repeat="(category, value) in categories">
               <td ng-bind="value.comment"></td>
               <td ng-bind="value.score"></td>
-              <td><input type="number" step="0.01" ng-model="student.points[category]"></td>
+              <td><input type="number" step="0.01" max="{{value.score}}" ng-model="student.points[category]"></td>
               <td><textarea ng-model="student.comments[category]"></textarea></td>
             </tr>
             <tr>

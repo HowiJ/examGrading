@@ -57,9 +57,7 @@
           }
         }
         factory.getScore = callback => {
-          if (studentScore) {
-            callback(studentScore);
-          }
+          callback(studentScore);
         }
         factory.sendEmail = callback => {
           if (studentScore) {
@@ -139,6 +137,13 @@
         })
 
         app.controller('emailController', function($scope, $location, grading) {
+          grading.getScore((data) => {
+            console.log(`getscore`);
+            
+            if (!data) {
+              $location.url('/');
+            }
+          })
           grading.getScore(score => {
             $scope.student = score;
           })

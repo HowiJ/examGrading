@@ -1,7 +1,41 @@
-<a href="/">< Back</a>
 
+<h2>Results</h2>
+<h4>Student: <span ng-bind="student.name"></span></h4>
+<h4>Email: <span ng-bind="student.email"></span></h4>
 <h4>Score: <span ng-bind="student.score"></span></h4>
-
-{{student}}
-
+<input type="submit" value="Cancel" ng-click="$location.url('/');">
 <input type="submit" value="Send Email" ng-click="sendEmail()">
+
+<h2>Template</h2>
+<hr>
+<p>=====================</p>
+
+Hello {{student.name}}, 
+
+<p>Below are the results for the {{student.stack}} belt exam you took recently.
+We gave you a total score of {{student.score}} for this exam.</p>
+
+<h4>Score Breakdown:</h4>
+<ol>
+  <li>10.0 - perfect</li>
+  <li>9.5 - near perfect</li>
+  <li>9.0 - very good</li>
+  <li>8.5 - pretty good</li>
+  <li>8.0 - good</li>
+  <li>below 8.0 - fail</li>
+</ol>
+
+<h4>Comments:</h4>
+<ul>
+  <li ng-repeat="comment in student.comments" ng-bind="comment"></li>
+</ul>
+
+  <p ng-if="student.score < 9.5">Try building out the test fully before taking it again, it's good practice!</p>
+  <p ng-if="student.score >= 9.5">Nice job! </p>
+
+<p>======================================</p>
+
+<hr>
+
+<h2>Raw Data</h2>
+{{student}}
