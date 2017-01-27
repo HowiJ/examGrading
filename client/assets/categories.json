@@ -1,0 +1,48 @@
+[
+  {
+    "score": 1,
+    "comment": "App is Deployed (except for Heroku)"
+  },{
+    "score": 0.25,
+    "comment": "Login. One-time login until the user logs out. The prompt should not ask the user for every page refresh"
+  },{
+    "score": 0.25,
+    "comment": "Logout"
+  },{
+    "score": 0.5,
+    "comment": "Polls Dashboard: Display of all survey questions, author of the survey, and date created"
+  },{
+    "score": 0.25,
+    "comment": "Search feature."
+  },{
+    "score": 0.5,
+    "comment": "Individual Survey Page: Displays the survey question and the options"
+  },{
+    "score": 0.5,
+    "comment": "Individual Survey Page: Displays correct count of votes per option/answer"
+  },{
+    "score": 0.5,
+    "comment": "Vote: Upon clicking the Vote button. the vote count increments"
+  },{
+    "score": 0.5,
+    "comment": "Vote: Information should be saved on the DB and should appear when other users log in."
+  },{
+    "score": 0.5,
+    "comment": "Add Question: Able to add survey question and options"
+  },{
+    "score": 0.25,
+    "comment": "Add Question: Validation should be implemented on questions and options."
+  },{
+    "score": 0.25,
+    "comment": "Add Question: Error message should be displayed on validation."
+  },{
+    "score": 0.25,
+    "comment": "Add Question: On successful add of question, the user is redirected to Polls Dashboard with the new survey question appended on the table."
+  },{
+    "score": 0.25,
+    "comment": "Delete: Option should only be displayed on the survey questions the logged user created."
+  },{
+    "score": 0.5,
+    "comment": "Delete: Ability to delete a survey question."
+  }
+]

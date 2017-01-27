@@ -1,0 +1,83 @@
+<h3 ng-click="credentials = !credentials" style="border-bottom: 1px solid black; border-top: 1px solid black">
+  <span ng-if="credentials">-</span>
+  <span ng-if="!credentials">+</span>
+  Instructor Credentials
+</h3>
+<h5>Current Instructor: {{currentInstructor.email}}</h5>
+<form ng-submit="saveCredentials()" ng-if="credentials">
+  <div class="Instructor">
+    <table>
+      <tbody>
+        <tr> 
+          <th>
+            <label for="instructor_email">Instructor Email:</label>
+          </th>
+          <th>
+            <input type="email" ng-model="instructor.email" id="instructor_email" required>
+          </th>
+        </tr>
+        <tr> 
+          <th>
+            <label for="instructor_password">Password: </label>
+          </th>
+          <th>
+            <input type="password" ng-model="instructor.password" id="instructor_password" required>
+          </th>
+        </tr>
+        <tr>
+          <th>Submit</th>
+          <th><input type="submit" value="Save Credentials"></th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
+
+<h3 ng-click="grading = !grading" style="border-bottom: 1px solid black; border-top: 1px solid black">
+        <span ng-if="grading">-</span>
+        <span ng-if="!grading">+</span>
+        Exam Grading
+      </h3>
+      <form ng-submit="submitScore()" ng-show="grading"> 
+        <table>
+          <tbody>
+            <tr>
+              <th>Student Name</th>
+              <td><input type="text" ng-model="student.name" required></td>
+            </tr>
+            <tr>
+              <th>Student Email</th>
+              <td><input type="email" ng-model="student.email" required></td>
+            </tr>
+            <tr>
+              <th>Stack</th>
+              <th><input type="text" ng-model="student.stack" required></th>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Points</th>
+              <th>Points to Deduct</th>
+              <th>Comments</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="(category, value) in categories">
+              <td ng-bind="value.comment"></td>
+              <td ng-bind="value.score"></td>
+              <td><input type="number" step="0.01" ng-model="student.points[category]"></td>
+              <td><textarea ng-model="student.comments[category]"></textarea></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><input type="submit" value="Submit Score"></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>

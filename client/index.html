@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <title>Exam Grading App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="angular/angular.min.js"></script>
+    <script src="angular-route/angular-route.min.js"></script>
+    <script>
+      (function() {
+        const app = angular.module('app', ['ngRoute']);
+
+        app.config(function($routeProvider) {
+          $routeProvider
+          .when('/', {
+            templateUrl: 'partials/grading.html',
+            controller: 'mainController'
+          })
+          .when('/confirm', {
+            templateUrl: 'partials/confirm.html',
+            controller: 'emailController'
+          })
+        })
+
+        app.factory('grading', function($http) {
+          let factory = {};
+          let credentials = {email: 'hjiang@codingdojo.com'};
+          let studentScore = null;
+
+          // Credentials
+          factory.setCredentials = (cred, callback) => {
+            if (cred && cred.email && cred.password) {
+              credentials = cred;
+              callback(true);
+              return credentials
+            } else {
+              callback(false);
+            }
+          }
+          factory.getCredentials = callback => {
+            callback(credentials);
+          }
+          // Exam Scores
+        factory.setScore = (score, callback) => {
+          if (score) {
+            studentScore = score;
+            let ptd = 0; //points to deduct
+
+            for (let i in score.points) {
+              ptd+=score.points[i];
+            }
+            studentScore.score = Math.max(7, 10-ptd);
+
+            callback(true);
+          } else {
+            callback(false);
+          }
+        }
+        factory.getScore = callback => {
+          if (studentScore) {
+            callback(studentScore);
+          }
+        }
+        factory.sendEmail = callback => {
+          if (studentScore) {
+            $http.post('/email/send', studentScore).then(res => {
+              studentScore = null;
+              callback(res);
+            })
+          }
+        }
+
+
+          return factory;
+        })
+
+        app.factory('categories', function($http) {
+          let factory = {};
+
+          factory.getCategories = callback => {
+            $http.get('/assets/categories.json').then(res => {
+              callback(res.data);
+            })
+          }
+
+          return factory;
+        })
+
+        app.controller('mainController', function($scope, grading, $location, categories) {
+          // Menu display
+          $scope.grading = true;
+          $scope.credentials = true;
+          // Scope variables
+          $scope.instructor = {email: '', password: ''};
+          $scope.currentInstructor = {};
+          $scope.categories = {};
+          $scope.student = {points: {deploy: 0}, comments: {}};
+
+          // Categories Form
+          categories.getCategories(data => {
+            if (data) {
+              $scope.categories = data;
+            }
+          });
+
+
+          // Credentials
+          grading.getCredentials( cred => {
+            if (cred && cred.email) {
+              $scope.currentInstructor = cred;
+              $scope.credentials = false;
+            }
+          })
+          $scope.saveCredentials = () => {
+
+            $scope.currentInstructor = {
+              email: $scope.instructor.email,
+              password: $scope.instructor.password
+            }
+            grading.setCredentials($scope.currentInstructor, (bool) => {
+              $scope.instructor = {email: '', password: ''};
+              console.log(`Credentials Save Success: ${bool}`);
+            })
+          }
+
+          // Scores
+          grading.getScore(score => {
+            $scope.student = score;
+          })
+          $scope.submitScore = () => {
+            console.log($scope.student);
+            grading.setScore($scope.student, (bool) => {
+              if (bool) {
+                $location.url('/confirm');
+                $scope.student = {points: {deploy: 0}, comments: {}};
+              }
+            })
+          }
+        })
+
+        app.controller('emailController', function($scope, $location, grading) {
+          grading.getScore(score => {
+            $scope.student = score;
+          })
+          $scope.sendEmail = () => {
+            grading.sendEmail((res) => {
+              console.log(res);
+              $location.url('/');
+            })
+          }
+        })
+      })()
+    </script>
+  </head>
+  <body>
+    <div ng-view=""></div>
+  </body>
+</html>

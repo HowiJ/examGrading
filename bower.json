@@ -1,0 +1,21 @@
+{
+  "name": "exam_grading",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Howard Jiang <me@howardjiang.com> (http://howardjiang.com)"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-route": "^1.6.1"
+  }
+}

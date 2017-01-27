@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <p>=====================</p>
+
+    Hello <%= name %>, 
+
+    <p>Below are the results for the <%= stack %> belt exam you took recently.
+    We gave you a total score of <%= score %> for this exam.</p>
+    
+    <h4>Score Breakdown:</h4>
+    <ol>
+      <li>10.0 - perfect</li>
+      <li>9.5 - near perfect</li>
+      <li>9.0 - very good</li>
+      <li>8.5 - pretty good</li>
+      <li>8.0 - good</li>
+      <li>below 8.0 - fail</li>
+    </ol>
+
+    <h4>Comments:</h4>
+    <ul>
+    <% for (var i in comments) { %>
+      <li><%= comments[i] %></li>
+    <% } %>
+    </ul>
+
+    <% if (score < 9.5) { %>
+      <p>Try building out the test fully before taking it again, it's good practice!</p>
+    <% } else { %>
+      <p>Nice job! </p>
+    <% } %>
+    
+    <p>======================================</p>
+
+  </body>
+</html>
